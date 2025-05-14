@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kenya Brews Shop - Home</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/slider.css"> </head>
+<body>
+    <header>
+        <div class="logo">Kenya Brews Shop</div>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="products.html">Products</a></li>
+                <li><a href="cart.html">Cart (0)</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="home">
+        <section class="hero">
+            <h1>Welcome to Nairobi's Best Online Shop!</h1>
+            <p>Discover unique coffee products made with love in Kenya.</p>
+            <a href="products.html" class="button">Shop Now</a>
+        </section>
+
+        <section class="image-slider-container">
+            <div class="image-slider">
+                <div class="slide fade">
+                    <img src="images/coffee_slider1.jpg" style="width:100%" alt="Slider Image 1">
+                </div>
+
+                <div class="slide fade">
+                    <img src="images/coffee_slider2.jpg" style="width:100%" alt="Slider Image 2">
+                </div>
+
+                <div class="slide fade">
+                    <img src="images/coffee_slider3.jpg" style="width:100%" alt="Slider Image 3">
+                </div>
+
+                <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+                <a class="next" onclick="plusSlides(1)">&#10095;</a>
+            </div>
+            <div style="text-align:center">
+                <span class="dot" onclick="currentSlide(1)"></span>
+                <span class="dot" onclick="currentSlide(2)"></span>
+                <span class="dot" onclick="currentSlide(3)"></span>
+            </div>
+        </section>
+
+        <section class="featured-products">
+            <h2>Featured Products</h2>
+            <div class="product-grid">
+                <div class="product-card">
+                    <img src="images/product1.jpeg" alt="Product 1">
+                    <h3>Starbucks Flavoured Coffee</h3>
+                    <p class="price">KES 1500</p>
+                    <button class="add-to-cart" data-id="1" data-name="Starbucks Flavoured Coffee" data-price="500" data-image="images/product1.jpg">Add to Cart</button>
+                    <a href="product-details.html?id=1" class="view-details">View Details</a>
+                </div>
+                <div class="product-card">
+                    <img src="images/product2.jpeg" alt="Product 2">
+                    <h3>Kenya Noir Black Coffee</h3>
+                    <p class="price">KES 800</p>
+                    <button class="add-to-cart" data-id="2" data-name="Kenya Noir Black Coffee" data-price="800" data-image="images/product2.jpg">Add to Cart</button>
+                    <a href="product-details.html?id=2" class="view-details">View Details</a>
+                </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Kenya Brews. All rights reserved.</p>
+    </footer>
+
+    <script src="js/script.js"></script>
+    <script src="js/slider.js"></script> </body>
+</html>

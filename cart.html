@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nairobi E-Commerce - Shopping Cart</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header>
+        <div class="logo">Kenya Brews Shop</div>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="products.html">Products</a></li>
+                <li><a href="cart.html">Cart (<span id="cart-item-count">0</span>)</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="cart-page">
+        <h1>Shopping Cart</h1>
+        <div id="cart-items">
+            <p>Your cart is empty.</p>
+        </div>
+        <div class="cart-summary">
+            <h3>Order Summary</h3>
+            <p>Total: KES <span id="cart-total">0</span></p>
+            <a href="checkout.html" class="button checkout-button">Proceed to Checkout</a>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Kenya Brews Shop. All rights reserved.</p>
+    </footer>
+
+    <script src="js/script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            loadCart();
+        });
+
+        function loadCart() {
+            const cartItemsContainer = document.getElementById('cart-items');
+            const cartTotalElement = document.getElementById('cart-total');
+            const cartItemCountElement = document.getElementById('cart-item-count');
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+            let total = 0;
+
+            cartItemsContainer.innerHTML = ''; // Clear previous items
+            cartItemCountElement.textContent = cart.length;
+
+            if (cart.length === 0) {
+                cartItemsContainer.innerHTML = '<p>Your cart is empty.</p>';
+                cartTotalElement.textContent = '0';
+                return;
+            }
+
+            cart.forEach(item => {
+                const cartItem = document.createElement('div');
+                cartItem.classList.add('cart-item');
+                cartItem.innerHTML = `
+                    <img src="${item.image}" alt="${item.name}">
+                    <div class="item-details">
+                        <h3>${item.name}</h3>
+                        <p class="price">KES ${item.price}</p>
+                        <div class="quantity-controls">
+                            <button class="decrease-quantity" data-id="${item.id}">-</button>
+                            <span>${item.quantity}</span>
+                            <button class="increase-quantity" data-id="${item.id}">+</button>
+                        </div>
+                        <button class="remove-item" data-id="${item.id}">Remove</button>
+                    </div>
+                `;
+                cartItemsContainer.appendChild(cartItem);
+                total += item.price * item.quantity;
+            });
+
+            cartTotalElement.textContent = total;
+
+            // Add event listeners for quantity changes and removal
+            const decreaseButtons = document.querySelectorAll('.decrease-quantity');
+            decreaseButtons.forEach(button => {
+                button.addEventListener('click', decreaseItemQuantity);
+            });
+
+            const increaseButtons = document.querySelectorAll('.increase-quantity');
+            increaseButtons.forEach(button => {
+                button.addEventListener('click', increaseItemQuantity);
+            });
+
+            const removeButtons = document.querySelectorAll('.remove-item');
+            removeButtons.forEach(button => {
+                button.addEventListener('click', removeItem);
+            });
+        }
+
+        function decreaseItemQuantity(event) {
+            const itemId = event.target.dataset.id;
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const itemIndex = cart.findIndex(item => item.id === itemId);
+
+            if (itemIndex > -1 && cart[itemIndex].quantity > 1) {
+                cart[itemIndex].quantity--;
+                localStorage.setItem('cart', JSON.stringify(cart));
+                loadCart();
+            }
+        }
+
+        function increaseItemQuantity(event) {
+            const itemId = event.target.dataset.id;
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const itemIndex = cart.findIndex(item => item.id === itemId);
+
+            if (itemIndex > -1) {
+                cart[itemIndex].quantity++;
+                localStorage.setItem('cart', JSON.stringify(cart));
+                loadCart();
+            }
+        }
+
+        function removeItem(event) {
+            const itemId = event.target.dataset.id;
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+            cart = cart.filter(item => item.id !== itemId);
+            localStorage.setItem('cart', JSON.stringify(cart));
+            loadCart();
+        }
+    </script>
+</body>
+</html>

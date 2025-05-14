@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nairobi E-Commerce - Checkout</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header>
+        <div class="logo">Kenya Brews Shop</div>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="products.html">Products</a></li>
+                <li><a href="cart.html">Cart (<span id="cart-item-count">0</span>)</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="checkout-page">
+        <h1>Checkout</h1>
+        <div class="checkout-form">
+            <h2>Shipping Information</h2>
+            <form id="checkoutForm">
+                <div class="form-group">
+                    <label for="name">Name:</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="address">Address:</label>
+                    <textarea id="address" name="address" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="phone">Phone:</label>
+                    <input type="tel" id="phone" name="phone">
+                </div>
+
+                <h2>Order Summary</h2>
+                <div id="checkout-items">
+                    </div>
+                <p class="total">Total: KES <span id="checkout-total">0</span></p>
+
+                <button type="submit" class="button">Place Order</button>
+            </form>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Kenya Brews Shop. All rights reserved.</p>
+    </footer>
+
+    <script src="js/script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            loadCheckout();
+            const checkoutForm = document.getElementById('checkoutForm');
+            checkoutForm.addEventListener('submit', handleCheckoutSubmit);
+            updateCartItemCount();
+        });
+
+        function updateCartItemCount() {
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            document.getElementById('cart-item-count').textContent = cart.length;
+        }
+
+        function loadCheckout() {
+            const checkoutItemsContainer = document.getElementById('checkout-items');
+            const checkoutTotalElement = document.getElementById('checkout-total');
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+            let total = 0;
+
+            checkoutItemsContainer.innerHTML = ''; // Clear previous items
+
+            if (cart.length === 0) {
+                checkoutItemsContainer.innerHTML = '<p>Your cart is empty.</p>';
+                checkoutTotalElement.textContent = '0';
+                return;
+            }
+
+            cart.forEach(item => {
+                const checkoutItem = document.createElement('div');
+                checkoutItem.classList.add('checkout-item');
+                checkoutItem.innerHTML = `
+                    <img src="${item.image}" alt="${item.name}">
+                    <div class="item-details">
+                        <h3>${item.name}</h3>
+                        <p class="price">KES ${item.price} x ${item.quantity}</p>
+                        <p class="subtotal">Subtotal: KES ${item.price * item.quantity}</p>
+                    </div>
+                `;
+                checkoutItemsContainer.appendChild(checkoutItem);
+                total += item.price * item.quantity;
+            });
+
+            checkoutTotalElement.textContent = total;
+        }
+
+        function handleCheckoutSubmit(event) {
+            event.preventDefault(); // Prevent actual form submission
+
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const address = document.getElementById('address').value;
+            const phone = document.getElementById('phone').value;
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const total = document.getElementById('checkout-total').textContent;
+
+            if (cart.length === 0) {
+                alert('Your cart is empty. Please add items before checkout.');
+                return;
+            }
+
+            // In a real application, you would send this order data to a server
+            console.log('Order Details:');
+            console.log('Name:', name);
+            console.log('Email:', email);
+            console.log('Address:', address);
+            console.log('Phone:', phone);
+            console.log('Cart:', cart);
+            console.log('Total:', total);
+
+            alert('Order placed successfully! Thank you for shopping with Nairobi E-Shop.');
+
+            // Optionally clear the cart after successful order
+            localStorage.removeItem('cart');
+            updateCartItemCount();
+            loadCheckout(); // Reload checkout to show empty cart
+            window.location.href = 'index.html'; // Redirect to homepage or order confirmation page
+        }
+    </script>
+</body>
+</html>

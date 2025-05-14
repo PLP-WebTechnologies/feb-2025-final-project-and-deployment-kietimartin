@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Nairobi E-Commerce - Product Details</title>
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <header>
+      <div class="logo">Kenya Brews Shop</div>
+      <nav>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="products.html">Products</a></li>
+          <li><a href="cart.html">Cart (0)</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <main class="product-details-page">
+      <div class="product-info">
+        <img
+          id="product-image"
+          src="/images/product1.jpeg"
+          alt="Product Image"
+        />
+        <div class="details">
+          <h1 id="product-name">Starbucks Flavoured Coffee</h1>
+          <p class="price" id="product-price">KES 1500</p>
+          <p id="product-description">
+            Available in a variety of flavours to soothe your tastebuds.
+          </p>
+          <div class="quantity-controls">
+            <label for="quantity">Quantity:</label>
+            <input
+              type="number"
+              id="quantity"
+              name="quantity"
+              value="1"
+              min="1"
+            />
+          </div>
+          <button
+            id="add-to-cart-details"
+            class="add-to-cart"
+            data-id="1"
+            data-name="Starbucks Flavoured Coffee"
+            data-price="1500"
+            data-image="images/product1.jpg"
+          >
+            Add to Cart
+          </button>
+        </div>
+      </div>
+      <a href="products.html" class="back-to-products">Back to Products</a>
+    </main>
+
+    <footer>
+      <p>&copy; 2025 Nairobi E-Shop. All rights reserved.</p>
+    </footer>
+
+    <script src="js/script.js"></script>
+    <script>
+      // Basic JavaScript to fetch product ID from URL and update details
+      document.addEventListener("DOMContentLoaded", () => {
+        const urlParams = new URLSearchParams(window.location.search);
+        const productId = urlParams.get("id");
+
+        // In a real scenario, you would fetch product data based on ID
+        if (productId === "1") {
+          document.getElementById("product-image").src = "images/product1.jpeg";
+          document.getElementById("product-name").textContent =
+            "Starbucks Flavoured Coffee";
+          document.getElementById("product-price").textContent = "KES 1500";
+          document.getElementById("product-description").textContent =
+            "Available in a variety of flavours to soothe your tastebuds.";
+          document.getElementById("add-to-cart-details").dataset.id = "1";
+          document.getElementById("add-to-cart-details").dataset.name =
+            "Starbucks Flavoured Coffee";
+          document.getElementById("add-to-cart-details").dataset.price = "1500";
+          document.getElementById("add-to-cart-details").dataset.image =
+            "images/product1.jpeg";
+        } else if (productId === "2") {
+          document.getElementById("product-image").src = "images/product2.jpeg";
+          document.getElementById("product-name").textContent =
+            "Kenya Noir Coffee";
+          document.getElementById("product-price").textContent = "KES 800";
+          document.getElementById("product-description").textContent =
+            "Premium Kenyan coffee with a rich aroma.";
+          document.getElementById("add-to-cart-details").dataset.id = "2";
+          document.getElementById("add-to-cart-details").dataset.name =
+            "Kenya Noir Coffee";
+          document.getElementById("add-to-cart-details").dataset.price = "800";
+          document.getElementById("add-to-cart-details").dataset.image =
+            "images/product2.jpeg";
+        }
+      });
+    </script>
+  </body>
+</html>
